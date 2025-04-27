@@ -9,6 +9,7 @@ class OrganismoPublico(models.Model):
         return self.nombre_organismo
     
 class ComunaPlan(models.Model):
+    organimos = models.ForeignKey(OrganismoPublico, on_delete=models.CASCADE)
     nombre_comuna = models.CharField(max_length=100)
     activo = models.BooleanField(default=True)
 
