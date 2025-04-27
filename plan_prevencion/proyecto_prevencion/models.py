@@ -38,11 +38,14 @@ class Medida(models.Model):
     nombre_corto = models.CharField(max_length=255)
     nombre_largo = models.CharField(max_length=255)
     organismo = models.ForeignKey(OrganismoPublico, on_delete=models.CASCADE)
+    comunas = models.ForeignKey(ComunaPlan, on_delete=models.CASCADE)
     regulatorio = models.BooleanField(default=True)
     descripcion_formula = models.TextField()
     tipo_formula = models.CharField(max_length=20, choices=TIPO_FORMULA_CHOICES)
     frecuencia = models.CharField(max_length=10, choices=FRECUENCIA_CHOICES)
     proxima_fecha_carga = models.DateField(null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+    update_at = models.DateField(auto_now=True)
     activo = models.BooleanField(default=True)
 
     def __str__(self):
@@ -59,6 +62,8 @@ class Usuario(AbstractUser):
     rut_usuario = models.CharField(unique=True, blank=True, null=True, max_length=10)
     organismo = models.ForeignKey(OrganismoPublico, blank=True, null=True, on_delete=models.CASCADE)
     aprobado = models.BooleanField(default=False)
+    created_at = models.DateField(auto_now_add=True)
+    update_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.username
@@ -71,7 +76,10 @@ class Indicador(models.Model):
     fecha_reporte = models.DateTimeField(auto_now_add=True)
     fecha_aprobacion = models.DateTimeField(null=True, blank=True)
     fecha_rechazo = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+    update_at = models.DateField(auto_now=True)
     motivo_rechazo = models.TextField(null=True, blank=True)
+
 
     def __str__(self):
         return f"Indicador para {self.medida.nombre_corto}"
