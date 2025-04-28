@@ -53,7 +53,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          coverage run --source=plan_prevencion/proyecto_prevencion -m pytest plan_prevencion/proyecto_prevencion/tests
+          coverage run --source=plan_prevencion/proyecto_prevencion/apis,plan_prevencion/plan_prevencion -m pytest plan_prevencion/proyecto_prevencion/tests
         
       - name: Check coverage percentage (fail if < 70%)
         run: |
