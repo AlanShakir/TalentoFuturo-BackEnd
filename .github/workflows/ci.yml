@@ -1,3 +1,4 @@
+
 name: CI para plan de prevención de descontaminación ambiental
 
 on:
@@ -43,7 +44,6 @@ jobs:
           pip install -r requirements.txt
           pip install pytest coverage
 
-
       - name: Wait for Postgres to be ready
         run: |
           until pg_isready -h localhost -p 5432 -U "$DB_USER_DEV"; do
@@ -51,14 +51,11 @@ jobs:
             sleep 1
           done
 
-
       - name: Run tests with coverage
-        working-directory: ./plan_prevencion
         run: |
-          coverage run --source=plan_prevencion -m pytest plan_prevencion/proyecto_prevencion/tests
+          coverage run --source=plan_prevencion/plan_prevencion -m pytest plan_prevencion/proyecto_prevencion/tests
 
       - name: Check coverage percentage (fail if < 70%)
-        working-directory: ./plan_prevencion
         run: |
           coverage report --fail-under=70
           coverage xml
@@ -67,4 +64,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: plan_prevencion/coverage.xml
+          path: coverage.xml
