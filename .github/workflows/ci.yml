@@ -1,4 +1,4 @@
-name: Proyecto CI
+name: CI para plan de prevención de descontaminación ambiental
 
 on:
   pull_request:
@@ -8,17 +8,49 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: ppda
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DB_USER_DEV: postgres
+      DB_PASSWORD_DEV: admin
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest coverage
+
+
+      - name: Wait for Postgres to be ready
+        run: |
+          until pg_isready -h localhost -p 5432 -U "$DB_USER_DEV"; do
+            echo "Waiting for database..."
+            sleep 1
+          done
+
 
       - name: Run tests with coverage
         working-directory: ./plan_prevencion
@@ -36,3 +68,4 @@ jobs:
         with:
           name: coverage-report
           path: plan_prevencion/coverage.xml
+
