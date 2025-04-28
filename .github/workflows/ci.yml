@@ -53,7 +53,7 @@ jobs:
 
       - name: Run tests with coverage
         run: | 
-          coverage run --source=plan_prevencion/plan_prevencion,plan_prevencion/proyecto_prevencion \
+          coverage run --source=plan_prevencion/plan_prevencion,plan_prevencion/proyecto_prevencion/apis \
           --omit=plan_prevencion/plan_prevencion/asgi.py,plan_prevencion/plan_prevencion/settings_dev.py \
           -m pytest plan_prevencion/proyecto_prevencion/tests
 
