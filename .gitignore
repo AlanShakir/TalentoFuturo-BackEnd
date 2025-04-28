@@ -3,3 +3,5 @@
 **/__pycache__/
 /plan_prevencion/staticfiles
 .coverage
+.pytest_cache
+htmlcov
