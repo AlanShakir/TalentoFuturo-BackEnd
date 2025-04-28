@@ -55,7 +55,7 @@ jobs:
       - name: Run tests with coverage
         working-directory: ./plan_prevencion
         run: |
-          coverage run --source=. -m pytest ../proyecto_prevencion/tests
+          coverage run --source=. -m pytest plan_prevencion/tests
 
       - name: Check coverage percentage (fail if < 70%)
         working-directory: ./plan_prevencion
@@ -68,4 +68,3 @@ jobs:
         with:
           name: coverage-report
           path: plan_prevencion/coverage.xml
-
